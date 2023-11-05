@@ -57,4 +57,6 @@ dependencies {
 
     implementation(libs.bundles.androidx.compose.bom)
     implementation(libs.bundles.androidx.tv.compose)
+
+    implementation(libs.bundles.navigation)
 }

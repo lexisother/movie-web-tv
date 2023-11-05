@@ -44,6 +44,7 @@ activityCompose = "1.8.0"
 composeBOM = "2023.10.01"
 tvFoundation = "1.0.0-alpha10"
 tvMaterial = "1.0.0-alpha10"
+navigationCompose = "2.7.5"
 
 
 [libraries]
@@ -57,10 +58,13 @@ ui-tooling = { module = "androidx.compose.ui:ui-tooling" }
 tv-foundation = { module = "androidx.tv:tv-foundation", version.ref = "tvFoundation" }
 tv-material = { module = "androidx.tv:tv-material", version.ref = "tvMaterial" }
 
+navigation-compose = { module = "androidx.navigation:navigation-compose", version.ref = "navigationCompose" }
+
 
 [bundles]
 androidx-compose-bom = ["compose-bom", "ui-tooling"]
 androidx-tv-compose = ["tv-foundation", "tv-material"]
+navigation = ["navigation-compose"]
 
 
 [plugins]
