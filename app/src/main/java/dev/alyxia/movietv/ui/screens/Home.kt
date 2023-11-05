@@ -32,9 +32,7 @@ import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
-import androidx.tv.material3.Button
 import androidx.tv.material3.ExperimentalTvMaterial3Api
-import androidx.tv.material3.LocalContentColor
 import androidx.tv.material3.Text
 import dev.alyxia.movietv.ui.theme.Typography
 
@@ -85,8 +83,8 @@ fun Home(navController: NavController) {
                 },
             cursorBrush = Brush.verticalGradient(
                 colors = listOf(
-                    LocalContentColor.current,
-                    LocalContentColor.current
+                    Color.Black,
+                    Color.Black
                 )
             ),
             keyboardOptions = KeyboardOptions(
@@ -117,9 +115,6 @@ fun Home(navController: NavController) {
                     )
                 }
             }
-        }
-        Button(onClick = { /*TODO*/ }) {
-            Text("gi")
         }
     }
 }
