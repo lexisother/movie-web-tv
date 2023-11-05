@@ -15,9 +15,9 @@ import androidx.tv.material3.Surface
 import androidx.tv.material3.Text
 import dev.alyxia.movietv.ui.theme.MovieTVTheme
 
-@OptIn(ExperimentalTvMaterial3Api::class)
 class MainActivity : ComponentActivity() {
 
+    @OptIn(ExperimentalTvMaterial3Api::class)
     override fun onCreate(savedInstanceState: Bundle?) {
         installSplashScreen()
         super.onCreate(savedInstanceState)
@@ -25,15 +25,7 @@ class MainActivity : ComponentActivity() {
         setContent {
             MovieTVTheme {
                 Surface(modifier = Modifier.fillMaxSize()) {
-                    Box(
-                        modifier = Modifier.fillMaxSize(),
-                        contentAlignment = Alignment.Center,
-                    ) {
-                        Text(text = "Hello Compose TV")
-                        Button(onClick = { println("helo!") }) {
-                            Text(text = "Button!")
-                        }
-                    }
+                    App()
                 }
             }
         }
