@@ -16,6 +16,8 @@ ksp = "1.9.0-1.0.13"
 hilt-navigation-compose = "1.1.0"
 hilt-android = "2.48.1"
 
+tmdb = "1.12"
+
 
 [libraries]
 core-ktx = { module = "androidx.core:core-ktx", version.ref = "coreKtx" }
@@ -33,6 +35,8 @@ androidx-hilt-navigation-compose = { module = "androidx.hilt:hilt-navigation-com
 
 hilt-android = { module = "com.google.dagger:hilt-android", version.ref = "hilt-android" }
 hilt-compiler = { module = "com.google.dagger:hilt-compiler", version.ref = "hilt-android" }
+
+tmdb = { module = "com.github.holgerbrandl:themoviedbapi", version.ref = "tmdb" }
 
 
 [bundles]
