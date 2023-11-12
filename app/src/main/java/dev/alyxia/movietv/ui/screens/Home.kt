@@ -18,8 +18,11 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.graphicsLayer
 import android.view.KeyEvent
 import androidx.compose.foundation.interaction.MutableInteractionSource
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.focus.FocusDirection
 import androidx.compose.ui.graphics.Brush
@@ -27,12 +30,10 @@ import androidx.compose.ui.input.key.onKeyEvent
 import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavController
-import androidx.tv.foundation.lazy.list.TvLazyColumn
-import androidx.tv.foundation.lazy.list.TvLazyListState
-import androidx.tv.foundation.lazy.list.rememberTvLazyListState
 import androidx.tv.material3.ExperimentalTvMaterial3Api
 import androidx.tv.material3.Text
 import app.moviebase.tmdb.model.TmdbMoviePageResult
@@ -61,162 +62,85 @@ fun Home(navController: NavController, viewModel: HomeViewModel = hiltViewModel(
 @Composable
 fun Results(
     movieList: TmdbMoviePageResult,
-    searchMovies: (query: String) -> Unit,
-    tvLazyColumnState: TvLazyListState = rememberTvLazyListState()
+    searchMovies: (query: String) -> Unit
 ) {
     var text by remember { mutableStateOf("") }
     val tfFocusRequester = remember { FocusRequester() }
     val focusManager = LocalFocusManager.current
     val tfInteractionSource = remember { MutableInteractionSource() }
 
-    TvLazyColumn(state = tvLazyColumnState) {
-        item {
-            BasicTextField(
-                value = text,
-                onValueChange = { text = it },
-                modifier = Modifier
-                    .fillMaxWidth(0.5f)
-                    .padding(
-                        vertical = 4.dp,
-                        horizontal = 8.dp
-                    )
-                    .focusRequester(tfFocusRequester)
-                    .onKeyEvent {
-                        if (it.nativeKeyEvent.action == KeyEvent.ACTION_UP) {
-                            when (it.nativeKeyEvent.keyCode) {
-                                KeyEvent.KEYCODE_DPAD_DOWN -> {
-                                    focusManager.moveFocus(FocusDirection.Down)
-                                }
+    Column(horizontalAlignment = Alignment.CenterHorizontally, modifier = Modifier.fillMaxSize()) {
+        Text(
+            modifier = Modifier
+                .padding(top = 120.dp)
+                .align(Alignment.CenterHorizontally)
+                .padding(bottom = 30.dp),
+            fontSize = 25.sp,
+            text = "What do you want to watch?"
+        )
+        BasicTextField(
+            value = text,
+            onValueChange = { text = it },
+            modifier = Modifier
+                .fillMaxWidth(0.5f)
+                .padding(
+                    vertical = 4.dp,
+                    horizontal = 8.dp
+                )
+                .focusRequester(tfFocusRequester)
+                .onKeyEvent {
+                    if (it.nativeKeyEvent.action == KeyEvent.ACTION_UP) {
+                        when (it.nativeKeyEvent.keyCode) {
+                            KeyEvent.KEYCODE_DPAD_DOWN -> {
+                                focusManager.moveFocus(FocusDirection.Down)
+                            }
 
-                                KeyEvent.KEYCODE_DPAD_UP -> {
-                                    focusManager.moveFocus(FocusDirection.Up)
-                                }
+                            KeyEvent.KEYCODE_DPAD_UP -> {
+                                focusManager.moveFocus(FocusDirection.Up)
+                            }
 
-                                KeyEvent.KEYCODE_BACK -> {
-                                    focusManager.moveFocus(FocusDirection.Exit)
-                                }
+                            KeyEvent.KEYCODE_BACK -> {
+                                focusManager.moveFocus(FocusDirection.Exit)
                             }
                         }
-                        true
-                    },
-                cursorBrush = Brush.verticalGradient(
-                    colors = listOf(
-                        Color.Black,
-                        Color.Black
-                    )
-                ),
-                keyboardOptions = KeyboardOptions(
-                    autoCorrect = false,
-                    imeAction = ImeAction.Search
-                ),
-                keyboardActions = KeyboardActions(
-                    onSearch = {
-                        searchMovies(text)
                     }
-                ),
-                maxLines = 1,
-                interactionSource = tfInteractionSource
+                    true
+                },
+            cursorBrush = Brush.verticalGradient(
+                colors = listOf(
+                    Color.Black,
+                    Color.Black
+                )
+            ),
+            keyboardOptions = KeyboardOptions(
+                autoCorrect = false,
+                imeAction = ImeAction.Search
+            ),
+            keyboardActions = KeyboardActions(
+                onSearch = {
+                    searchMovies(text)
+                }
+            ),
+            maxLines = 1,
+            interactionSource = tfInteractionSource
+        ) {
+            Box(
+                Modifier
+                    .background(Color.LightGray, RoundedCornerShape(percent = 30))
+                    .padding(vertical = 16.dp)
+                    .padding(start = 20.dp)
             ) {
-                Box(
-                    Modifier
-                        .background(Color.LightGray, RoundedCornerShape(percent = 30))
-                        .padding(vertical = 16.dp)
-                        .padding(start = 20.dp)
-                ) {
-                    it()
-                    if (text.isEmpty()) {
-                        Text(
-                            modifier = Modifier.graphicsLayer { alpha = 0.6f },
-                            text = "Movie name...",
-                            style = Typography.titleSmall,
-                            color = Color.Black
-                        )
-                    }
+                it()
+                if (text.isEmpty()) {
+                    Text(
+                        modifier = Modifier.graphicsLayer { alpha = 0.6f },
+                        text = "Movie name...",
+                        style = Typography.titleSmall,
+                        color = Color.Black
+                    )
                 }
             }
         }
-
-        item {
-            Text(movieList.toString())
-        }
+        Text(movieList.toString())
     }
-
-//    Column(horizontalAlignment = Alignment.CenterHorizontally, modifier = Modifier.fillMaxSize()) {
-//        Button(onClick = {
-////            viewModel.query(text)
-//        }) {
-//            Text("what")
-//        }
-//        Text(
-//            modifier = Modifier
-//                .padding(top = 120.dp)
-//                .align(Alignment.CenterHorizontally)
-//                .padding(bottom = 30.dp),
-//            fontSize = 25.sp,
-//            text = "What do you want to watch?"
-//        )
-//        BasicTextField(
-//            value = text,
-//            onValueChange = { text = it },
-//            modifier = Modifier
-//                .fillMaxWidth(0.5f)
-//                .padding(
-//                    vertical = 4.dp,
-//                    horizontal = 8.dp
-//                )
-//                .focusRequester(tfFocusRequester)
-//                .onKeyEvent {
-//                    if (it.nativeKeyEvent.action == KeyEvent.ACTION_UP) {
-//                        when (it.nativeKeyEvent.keyCode) {
-//                            KeyEvent.KEYCODE_DPAD_DOWN -> {
-//                                focusManager.moveFocus(FocusDirection.Down)
-//                            }
-//
-//                            KeyEvent.KEYCODE_DPAD_UP -> {
-//                                focusManager.moveFocus(FocusDirection.Up)
-//                            }
-//
-//                            KeyEvent.KEYCODE_BACK -> {
-//                                focusManager.moveFocus(FocusDirection.Exit)
-//                            }
-//                        }
-//                    }
-//                    true
-//                },
-//            cursorBrush = Brush.verticalGradient(
-//                colors = listOf(
-//                    Color.Black,
-//                    Color.Black
-//                )
-//            ),
-//            keyboardOptions = KeyboardOptions(
-//                autoCorrect = false,
-//                imeAction = ImeAction.Search
-//            ),
-//            keyboardActions = KeyboardActions(
-//                onSearch = {
-//                    searchMovies(text)
-//                }
-//            ),
-//            maxLines = 1,
-//            interactionSource = tfInteractionSource
-//        ) {
-//            Box(
-//                Modifier
-//                    .background(Color.LightGray, RoundedCornerShape(percent = 30))
-//                    .padding(vertical = 16.dp)
-//                    .padding(start = 20.dp)
-//            ) {
-//                it()
-//                if (text.isEmpty()) {
-//                    Text(
-//                        modifier = Modifier.graphicsLayer { alpha = 0.6f },
-//                        text = "Movie name...",
-//                        style = Typography.titleSmall,
-//                        color = Color.Black
-//                    )
-//                }
-//            }
-//        }
-//    }
 }
