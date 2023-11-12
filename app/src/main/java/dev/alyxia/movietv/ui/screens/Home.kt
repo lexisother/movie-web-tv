@@ -36,7 +36,9 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavController
 import androidx.tv.material3.ExperimentalTvMaterial3Api
 import androidx.tv.material3.Text
-import app.moviebase.tmdb.model.TmdbMoviePageResult
+import app.moviebase.tmdb.model.TmdbMovie
+import dev.alyxia.movietv.rememberChildPadding
+import dev.alyxia.movietv.ui.components.MovieRow
 import dev.alyxia.movietv.ui.theme.Typography
 
 @OptIn(ExperimentalTvMaterial3Api::class)
@@ -52,7 +54,7 @@ fun Home(navController: NavController, viewModel: HomeViewModel = hiltViewModel(
         }
 
         is SearchState.Done -> {
-            val movieList = s.movieList
+            val movieList = s.movieList.results
             Results(movieList, viewModel::query)
         }
     }
@@ -61,9 +63,10 @@ fun Home(navController: NavController, viewModel: HomeViewModel = hiltViewModel(
 @OptIn(ExperimentalTvMaterial3Api::class, ExperimentalComposeUiApi::class)
 @Composable
 fun Results(
-    movieList: TmdbMoviePageResult,
+    movieList: List<TmdbMovie>,
     searchMovies: (query: String) -> Unit
 ) {
+    val childPadding = rememberChildPadding()
     var text by remember { mutableStateOf("") }
     val tfFocusRequester = remember { FocusRequester() }
     val focusManager = LocalFocusManager.current
@@ -141,6 +144,12 @@ fun Results(
                 }
             }
         }
-        Text(movieList.toString())
+
+        MovieRow(
+            modifier = Modifier
+                .fillMaxSize()
+                .padding(top = childPadding.top * 2),
+            movies = movieList
+        )
     }
 }
