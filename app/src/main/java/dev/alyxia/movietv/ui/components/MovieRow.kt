@@ -4,8 +4,13 @@ import androidx.compose.animation.AnimatedContent
 import androidx.compose.foundation.focusGroup
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.ExperimentalLayoutApi
+import androidx.compose.foundation.layout.FlowRow
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.layout.wrapContentSize
+import androidx.compose.foundation.layout.wrapContentWidth
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
@@ -15,6 +20,10 @@ import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.tv.foundation.PivotOffsets
+import androidx.tv.foundation.lazy.grid.TvGridCells
+import androidx.tv.foundation.lazy.grid.TvLazyVerticalGrid
+import androidx.tv.foundation.lazy.grid.itemsIndexed
+import androidx.tv.foundation.lazy.list.TvLazyColumn
 import androidx.tv.foundation.lazy.list.TvLazyRow
 import androidx.tv.foundation.lazy.list.itemsIndexed
 import androidx.tv.material3.ExperimentalTvMaterial3Api
@@ -25,7 +34,7 @@ import app.moviebase.tmdb.model.TmdbMoviePageResult
 import dev.alyxia.movietv.rememberChildPadding
 import dev.alyxia.movietv.ui.utils.createInitialFocusRestorerModifiers
 
-@OptIn(ExperimentalTvMaterial3Api::class)
+@OptIn(ExperimentalTvMaterial3Api::class, ExperimentalLayoutApi::class)
 @Composable
 fun MovieRow(
     modifier: Modifier = Modifier,
@@ -58,17 +67,22 @@ fun MovieRow(
         ) {
             val focusRestorerModifiers = createInitialFocusRestorerModifiers()
 
-            TvLazyRow(
-                modifier = Modifier.then(focusRestorerModifiers.parentModifier),
+            TvLazyVerticalGrid(
+                modifier = Modifier
+                    .then(focusRestorerModifiers.parentModifier)
+                    .wrapContentWidth(),
+                columns = TvGridCells.Fixed(3),
                 pivotOffsets = PivotOffsets(parentFraction = 0.07f),
                 contentPadding = PaddingValues(
                     start = startPadding,
                     end = endPadding
                 ),
-                horizontalArrangement = Arrangement.spacedBy(20.dp)
+                verticalArrangement = Arrangement.spacedBy(20.dp)
             ) {
                 itemsIndexed(it, key = { _, movie -> movie.id }) { index, movie ->
-                    Text(text = movie.title)
+                    Text(
+                        text = movie.title
+                    )
                 }
             }
         }
