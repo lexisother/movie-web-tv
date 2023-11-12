@@ -68,9 +68,12 @@ dependencies {
     implementation(libs.core.ktx)
     implementation(libs.activity.compose)
     implementation(libs.androidx.splashScreen)
+    implementation(libs.androidx.lifecycle.runtime.ktx)
+    implementation(libs.androidx.lifecycle.runtime.compose)
 
     implementation(libs.bundles.androidx.compose.bom)
     implementation(libs.bundles.androidx.tv.compose)
+    implementation(libs.androidx.lifecycle.viewmodel.compose)
 
     implementation(libs.bundles.navigation)
 

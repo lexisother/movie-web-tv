@@ -3,6 +3,7 @@ androidGradlePlugin = "8.1.2"
 androidLibrary = "8.1.1"
 kotlinAndroid = "1.9.0"
 androidxComposeCompiler = "1.5.3"
+lifecycle-runtime-ktx = "2.6.2"
 
 coreKtx = "1.12.0"
 splashScreen = "1.0.1"
@@ -23,6 +24,9 @@ tmdb = "1.0.0"
 core-ktx = { module = "androidx.core:core-ktx", version.ref = "coreKtx" }
 androidx-splashScreen = { module = "androidx.core:core-splashscreen", version.ref = "splashScreen"}
 activity-compose = { module = "androidx.activity:activity-compose", version.ref = "activityCompose" }
+androidx-lifecycle-runtime-compose = { module = "androidx.lifecycle:lifecycle-runtime-compose", version.ref = "lifecycle-runtime-ktx" }
+androidx-lifecycle-runtime-ktx = { module = "androidx.lifecycle:lifecycle-runtime-ktx", version.ref = "lifecycle-runtime-ktx" }
+androidx-lifecycle-viewmodel-compose = { module = "androidx.lifecycle:lifecycle-viewmodel-compose", version.ref = "lifecycle-runtime-ktx" }
 
 compose-bom = { module = "androidx.compose:compose-bom", version.ref = "composeBOM" }
 ui-tooling = { module = "androidx.compose.ui:ui-tooling" }
