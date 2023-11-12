@@ -41,6 +41,7 @@ android {
     }
     buildFeatures {
         compose = true
+        buildConfig = true
     }
     composeOptions {
         // NOTE to self: when updating `kotlinAndroid` in `libs`, please check which version to update the Compose compiler to
@@ -50,6 +51,7 @@ android {
     packaging {
         resources {
             excludes += "/META-INF/{AL2.0,LGPL2.1}"
+            excludes += "META-INF/*"
         }
     }
 }
@@ -76,5 +78,7 @@ dependencies {
     implementation(libs.androidx.hilt.navigation.compose)
     ksp(libs.hilt.compiler)
 
-    implementation(libs.tmdb)
+    implementation(libs.tmdb) {
+        exclude(group = "commons-logging", module = "commons-logging")
+    }
 }
